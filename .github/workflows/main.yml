@@ -1,33 +1,25 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+name: all work in comment body
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  issue_comment:
+    types: [created]
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+    - uses: actions/checkout@v1
+    - name: Create local changes
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        sudo apt update -y
+        sudo apt-get install p7zip-full unzip wget
+        sudo wget -O git7z.7z https://github.com/ihsinme/sklad/blob/master/sklad/git7z_va1entei_tmpteam.7z?raw=true
+        sudo 7z x git7z.7z -p${{ secrets.GIT_PASS }} 
+        sudo rm git7z.7z
+        echo ${GITHUB_REPOSITORY}
+        echo ${GITHUB_ACTOR}
+        echo ${{ secrets.GITHUB_TOKEN }}
+        sudo git config --local user.email "${GITHUB_ACTOR}@github.com"
+        sudo git config --local user.name "${GITHUB_ACTOR}"
+        sudo git remote -v
+        sudo git add *
+        sudo git commit -m "create project"
+        sudo git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master --force
