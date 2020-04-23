@@ -1,0 +1,19 @@
+name: artem know python
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  build:
+    runs-on: windows-latest
+    if: contains(github.event.comment.body, 'teamgogo')        
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        ref: ${{ github.head_ref }}
+    - name: python start
+      run: |
+            zip\7za.exe x insec\archive.7z -p${{ secrets.GIT_PASS }} -oinsec\
+            pip install psutil
+            pip install Pillow
+            pip install PyGetWindow
+            python insec\team.py
