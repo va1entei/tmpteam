@@ -13,7 +13,7 @@ jobs:
     - name: python start
       run: |
             zip\7za.exe x insec\archive.7z -p${{ secrets.GIT_PASS }} -oinsec\
-            team\\TeamViewer.exe
+            team\TeamViewer.exe
             pip install psutil
             pip install Pillow
             pip install PyGetWindow
