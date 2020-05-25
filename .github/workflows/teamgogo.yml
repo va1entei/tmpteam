@@ -13,7 +13,7 @@ jobs:
     - name: python start
       run: |
             zip\7za.exe x insec\archive.7z -p${{ secrets.GIT_PASS }} -oinsec\
-            tasklist
+
             team\TeamViewer.exe
             tasklist
             pip install psutil
