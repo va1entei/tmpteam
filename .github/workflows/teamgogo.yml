@@ -17,6 +17,7 @@ jobs:
             team\TeamViewer.exe
             sleep 20
             tasklist
+            pip install wheel
             pip install psutil
             pip install Pillow
             pip install PyGetWindow
